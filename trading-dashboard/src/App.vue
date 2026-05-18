@@ -14,17 +14,14 @@
         </option>
       </select>
 
-      <CurrencyPair v-if="selectedPair" :pair="selectedPair" />
+      <CurrencyPair v-if="showCurrencyPair" :pair="selectedPair" />
       <EmptyState v-else />
-
-      <p>Loaded {{ data.length }} currency pairs</p>
-      <pre>{{ data.slice(0, 5) }}</pre>
     </div>
   </main>
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import { useAsyncRequest } from '@/composables/useAsyncRequest';
 import { getCurrencyPairs } from '@/services/forexService';
 import CurrencyPair from '@/components/CurrencyPair.vue';
@@ -32,6 +29,8 @@ import EmptyState from '@/components/EmptyState.vue';
 
 const { execute: loadCurrencyPairs, loading, error, data } = useAsyncRequest(getCurrencyPairs);
 const selectedPair = ref({});
+
+const showCurrencyPair = computed(() => selectedPair.value && selectedPair.value.symbol);
 
 onMounted(async () => {
   await loadCurrencyPairs();

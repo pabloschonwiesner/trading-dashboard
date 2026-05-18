@@ -22,7 +22,7 @@ export async function getCurrencyPairs() {
     return cached
   }
   const response = await provider.getCurrencyPairs()
-  cache.set(cacheKey, response, 624 * TTL_HOUR)
+  cache.set(cacheKey, response, 24 * TTL_HOUR)
   return response
 }
 

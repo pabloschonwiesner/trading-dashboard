@@ -1,11 +1,12 @@
 <template>
   <div>
-    <h2>{{ pair.symbol }}</h2>
-    <p>{{ pair.name }}</p>
+    <CurrencyFlags :baseCurrency="pair.baseCurrency" :quoteCurrency="pair.quoteCurrency" />
   </div>
 </template>
 
 <script setup>
+import CurrencyFlags from './CurrencyFlags.vue'
+
 defineProps({
   pair: {
     type: Object,
