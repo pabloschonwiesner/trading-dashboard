@@ -1,21 +1,43 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
+    FX Dashboard
   </header>
 
   <main>
-    <TheWelcome />
+    <div v-if="loading">Loading currency pairs...</div>
+    <div v-else-if="error">Error: {{ error.message }}</div>
+    <div v-else-if="data">
+      <select v-model="selectedPair">
+        <option value="">Select a currency pair</option>
+        <option v-for="pair in data" :key="pair.symbol" :value="pair">
+          {{ pair.symbol }} - {{ pair.name }}
+        </option>
+      </select>
+
+      <CurrencyPair v-if="selectedPair" :pair="selectedPair" />
+      <EmptyState v-else />
+
+      <p>Loaded {{ data.length }} currency pairs</p>
+      <pre>{{ data.slice(0, 5) }}</pre>
+    </div>
   </main>
 </template>
+
+<script setup>
+import { onMounted, ref } from 'vue'
+import { useAsyncRequest } from '@/composables/useAsyncRequest';
+import { getCurrencyPairs } from '@/services/forexService';
+import CurrencyPair from '@/components/CurrencyPair.vue';
+import EmptyState from '@/components/EmptyState.vue';
+
+const { execute: loadCurrencyPairs, loading, error, data } = useAsyncRequest(getCurrencyPairs);
+const selectedPair = ref({});
+
+onMounted(async () => {
+  await loadCurrencyPairs();
+});
+</script>
+
 
 <style scoped>
 header {

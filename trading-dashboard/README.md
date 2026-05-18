@@ -1,19 +1,53 @@
-# trading-dashboard
+# Trading Dashboard
 
-This template should help get you started developing with Vue 3 in Vite.
+This application is a trading dashboard that displays real-time market data and allows users to track their trading activities.
 
-## Recommended IDE Setup
+The purpose of this application is to show how I use Vue.js and other modern web technologies to build a production-ready application.
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## Features
 
-## Recommended Browser Setup
+- Historical and current rate for an FX pair
+- Exchanges selector
+- Currency pair selector
+- Time range selector
+- Current price for the selected pair
+- Difference between starting price and ending price of the current time selection
+- Historical close prices on a chart
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+## Tech Stack and libraries
+
+- Vue 3
+- Vite
+- Chart.js
+- Vitest
+- Playwright
+- Fetch API requests
+
+## Services
+
+- [https://massive.com](https://massive.com)
+
+Create an account and get an API key. You can use the free tier, which allows you to make 5 API calls per minute.
+Authentication is done via a Bearer token in the Authorization header or as a query parameter.
+
+You have to set up the API key in the `.env` file.
+
+```
+VITE_MASSIVE_API_BASE_URL=https://api.massive.com
+MASSIVE_API_KEY=your-api-key
+```
+
+
+
+
+
+## How it works?
+
+1. The user selects an exchange, a currency pair and a time range.
+2. The application fetches the historical data from the Massive API.
+3. The application displays the historical data on a chart.
+4. The application displays the current price for the selected pair.
+5. The application displays the difference between starting price and ending price of the current time selection.
 
 ## Customize configuration
 
