@@ -7,9 +7,6 @@
       :alt="`${currencyCode} symbol`"
       class="flag-image"
     />
-    <div v-else class="flag-placeholder">
-      <span class="currency-code">{{ currencyCode }}</span>
-    </div>
   </div>
 </template>
 
@@ -26,6 +23,7 @@ const props = defineProps({
 const flagUrl = computed(() => {
   return getCountryFlag(props.currencyCode)
 })
+
 </script>
 
 <style scoped>
