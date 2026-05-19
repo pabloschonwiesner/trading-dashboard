@@ -1,18 +1,36 @@
 <template>
-  <div>
-    <CurrencyFlags :baseCurrency="pair.baseCurrency" :quoteCurrency="pair.quoteCurrency" />
-    <CurrencyChart />
+  <div class="currency-pair">
+    <template v-if="showCurrencyPair">
+      <CurrencyFlags :baseCurrency="pair.baseCurrency" :quoteCurrency="pair.quoteCurrency" />
+      <CurrencyChart />
+    </template>
+    <EmptyState v-else />
   </div>
 </template>
 
 <script setup>
+import { computed } from 'vue';
 import CurrencyFlags from './CurrencyFlags.vue'
 import CurrencyChart from './CurrencyChart.vue'
+import EmptyState from '@/components/EmptyState.vue';
 
-defineProps({
+const props = defineProps({
   pair: {
     type: Object,
     required: true
   }
 });
+
+const showCurrencyPair = computed(() => props.pair && props.pair.symbol);
+
 </script>
+
+<style scoped>
+.currency-pair {
+  padding: 1.25rem;
+  background-color: #F8F9FA;
+  border-radius: 8px;
+  width: 100%;
+  height: 570px;
+}
+</style>

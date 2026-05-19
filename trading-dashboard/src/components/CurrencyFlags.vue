@@ -28,7 +28,8 @@ const props = defineProps({
 }
 
 .symbol {
-  margin-left: 1rem;
-  font-size: 24px;
+  margin-left: 0.5rem;
+  font-size: 20px;
+  font-weight: 700;
 }
 </style>

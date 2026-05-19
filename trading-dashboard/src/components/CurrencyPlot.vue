@@ -1,6 +1,8 @@
 <template>
   <div class="currency-plot">
-    <Line :data="chartData" :options="chartOptions" />
+    <div class="chart">
+      <Line :data="chartData" :options="chartOptions" />
+    </div>
   </div>
 </template>
 
@@ -29,33 +31,26 @@ ChartJS.register(
   Filler
 );
 
+const getPrimaryColor = () => {
+  return getComputedStyle(document.documentElement)
+    .getPropertyValue('--color-primary')
+    .trim() || '#667EEA';
+};
+
+const primaryColor = getPrimaryColor();
+
 const chartData = {
   labels: ['Oct 2', 'Oct 6', 'Oct 10', 'Oct 14', 'Oct 18', 'Oct 22', 'Oct 26', 'Oct 30'],
   datasets: [
     {
-      label: 'AED - EUR',
       data: [0.232, 0.231, 0.229, 0.235, 0.236, 0.230, 0.234, 0.235],
-
-      // línea azul
-      borderColor: '#6d8df7',
-
-      // área sombreada debajo de la línea
-      backgroundColor: 'rgba(109, 141, 247, 0.3)',
+      borderColor: primaryColor,
+      backgroundColor: `${primaryColor}20`,
       fill: true,
-
-      // grosor de la línea
       borderWidth: 2,
-
-      // curva suave
       tension: 0.1,
-
-      // ocultar los puntos
       pointRadius: 0,
-
-      // mostrar punto solo al hacer hover
       pointHoverRadius: 4,
-
-      // evitar línea escalonada
       stepped: false
     }
   ]
@@ -64,7 +59,6 @@ const chartData = {
 const chartOptions = {
   responsive: true,
   maintainAspectRatio: false,
-
   plugins: {
     legend: {
       display: false
@@ -83,7 +77,6 @@ const chartOptions = {
         display: false
       },
       ticks: {
-        color: '#6b7280',
         maxRotation: 0
       },
       border: {
@@ -93,15 +86,14 @@ const chartOptions = {
 
     y: {
       position: 'right',
-      grid: {
-        color: '#eef2f7'
-      },
       ticks: {
-        color: '#6b7280',
         callback: value => Number(value).toFixed(5)
       },
       border: {
         display: false
+      },
+      grid: {
+        color: '#eee'
       }
     }
   },
@@ -115,7 +107,15 @@ const chartOptions = {
 
 <style scoped>
 .currency-plot {
+  background-color: #FFF;
+  display: flex;
+  flex-direction: column;
+  height: 350px;
+}
+
+.chart {
   width: 100%;
-  min-height: 250px;
+  flex: 0 0 70%;
+  padding: 0.5rem;
 }
 </style>

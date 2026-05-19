@@ -31,9 +31,9 @@ const flagUrl = computed(() => {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 24px;
-  margin-right: 0.5rem;
+  width: 30px;
+  height: 20px;
+  margin-right: 0.25rem;
 }
 
 .flag-placeholder {
@@ -51,7 +51,7 @@ const flagUrl = computed(() => {
   height: 100%;
   object-fit: cover;
   border-radius: 4px;
-  border: 1px solid #bbb;
+  border: 1px solid #eee;
 }
 
 .currency-code {
