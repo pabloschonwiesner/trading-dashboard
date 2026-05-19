@@ -32,7 +32,7 @@ const exchangeOptions = [ { value: 'fx', label: 'Forex (FX)' } ];
 const selectedPair = ref({});
 const selectedExchange = ref(exchangeOptions[0]);
 
-const currencyPairOptions = computed(() => data.value?.map(pair => ({ value: pair, label: pair.name })) || []);
+const currencyPairOptions = computed(() => data.value?.map(pair => ({ value: pair, label: `${pair.symbol} - ${pair.name}` })) || []);
 
 onMounted(async () => {
   await loadCurrencyPairs();

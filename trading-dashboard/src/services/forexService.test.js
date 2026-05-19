@@ -1,32 +1,39 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { getCurrencyPairs, getHistoricalRates, getPreviousClose } from './forexService';
-import * as massiveAdapterModule from './massiveForexAdapter';
-import * as cacheModule from '@/cache/localStorageCache';
 
-vi.mock('./massiveForexAdapter');
-vi.mock('@/cache/localStorageCache');
+vi.mock('./massiveForexAdapter', () => {
+  const mockAdapter = {
+    getCurrencyPairs: vi.fn(),
+    getHistoricalRates: vi.fn(),
+    getPreviousClose: vi.fn()
+  };
+  
+  return {
+    createMassiveForexAdapter: vi.fn(() => mockAdapter)
+  };
+});
+
+vi.mock('@/cache/localStorageCache', () => {
+  const mockCache = {
+    get: vi.fn(),
+    set: vi.fn(),
+    remove: vi.fn()
+  };
+  
+  return {
+    createLocalStorageCache: vi.fn(() => mockCache)
+  };
+});
+
+import { getCurrencyPairs, getHistoricalRates, getPreviousClose } from './forexService';
+import { createMassiveForexAdapter } from './massiveForexAdapter';
+import { createLocalStorageCache } from '@/cache/localStorageCache';
+
+const mockAdapter = createMassiveForexAdapter();
+const mockCache = createLocalStorageCache();
 
 describe('forexService', () => {
-  let mockAdapter;
-  let mockCache;
-
   beforeEach(() => {
     vi.clearAllMocks();
-
-    mockAdapter = {
-      getCurrencyPairs: vi.fn(),
-      getHistoricalRates: vi.fn(),
-      getPreviousClose: vi.fn()
-    };
-
-    mockCache = {
-      get: vi.fn(),
-      set: vi.fn(),
-      remove: vi.fn()
-    };
-
-    massiveAdapterModule.createMassiveForexAdapter.mockReturnValue(mockAdapter);
-    cacheModule.createLocalStorageCache.mockReturnValue(mockCache);
   });
 
   describe('getCurrencyPairs', () => {
