@@ -49,5 +49,7 @@
 .timeframe-difference {
   background-color: aquamarine;
   color: green;
+  padding: 0.15rem 0.3rem;
+  border-radius: 4px;
 }
 </style>

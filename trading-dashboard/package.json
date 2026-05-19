@@ -14,7 +14,10 @@
     "lint:eslint": "eslint . --fix --cache"
   },
   "dependencies": {
-    "vue": "^3.5.32"
+    "chart.js": "^4.5.1",
+    "trading-dashboard": "file:",
+    "vue": "^3.5.32",
+    "vue-chartjs": "^5.3.3"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

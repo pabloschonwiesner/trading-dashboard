@@ -24,8 +24,9 @@ const timeframes = [
 button {
   padding: 0.5rem 1rem;
   border: 1px solid #ccc;
-  border-radius: 0.25rem;
+  border-radius: 4px;
   background-color: #fff;
   cursor: pointer;
+  margin: 0.75rem 0.75rem 0 0;
 }
 </style>
