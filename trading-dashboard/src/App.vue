@@ -1,6 +1,6 @@
 <template>
   <header>
-    FX Dashboard
+    🌐 FX Trading Dashboard
   </header>
 
   <main>

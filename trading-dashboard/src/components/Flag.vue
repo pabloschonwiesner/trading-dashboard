@@ -6,6 +6,8 @@
       :src="flagUrl" 
       :alt="`${currencyCode} symbol`"
       class="flag-image"
+      loading="lazy"
+      crossorigin="anonymous"
     />
   </div>
 </template>

@@ -32,5 +32,6 @@ const showCurrencyPair = computed(() => props.pair && props.pair.symbol);
   border-radius: 8px;
   width: 100%;
   height: 570px;
+  margin-top: 1.5rem;
 }
 </style>
