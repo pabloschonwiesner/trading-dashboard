@@ -1,8 +1,17 @@
 import { test, expect } from '@playwright/test'
 
-// See here how to get started:
-// https://playwright.dev/docs/intro
-test('visits the app root url', async ({ page }) => {
+test('should load the application successfully', async ({ page }) => {
   await page.goto('/')
-  await expect(page.locator('h1')).toHaveText('You did it!')
+  
+  const heading = page.getByRole('heading', { name: /FX Trading Dashboard/i })
+  await expect(heading).toBeVisible()
+  
+  const errors = []
+  page.on('pageerror', (error) => {
+    errors.push(error.message)
+  })
+  
+  await page.waitForTimeout(1000)
+  
+  expect(errors.length).toBe(0)
 })

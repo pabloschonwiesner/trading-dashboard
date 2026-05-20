@@ -1,10 +1,10 @@
 <template>
   <div class="currency-pair">
-    <template v-if="showCurrencyPair">
+    <EmptyState v-if="!showCurrencyPair" />
+    <template v-else>
       <CurrencyFlags :baseCurrency="pair.baseCurrency" :quoteCurrency="pair.quoteCurrency" />
       <CurrencyChart :pair="pair"/>
     </template>
-    <EmptyState v-else />
   </div>
 </template>
 

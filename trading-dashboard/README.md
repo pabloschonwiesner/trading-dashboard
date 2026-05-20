@@ -33,12 +33,11 @@ Authentication is done via a Bearer token in the Authorization header or as a qu
 You have to set up the API key in the `.env` file.
 
 ```
-VITE_MASSIVE_API_BASE_URL=https://api.massive.com
-MASSIVE_API_KEY=your-api-key
+# VITE_MASSIVE_API_BASE_URL=https://api.massive.com
+# VITE_MASSIVE_API_KEY=your-api-key
+# VITE_FLAG_AS_93_URL=https://raw.githubusercontent.com/Lissy93/currency-flags/master/assets/flags_svg
+# VITE_FLAGCDN_URL=https://flagcdn.com/w20
 ```
-
-
-
 
 
 ## How it works?
@@ -47,7 +46,9 @@ MASSIVE_API_KEY=your-api-key
 2. The application fetches the historical data from the Massive API.
 3. The application displays the historical data on a chart.
 4. The application displays the current price for the selected pair.
-5. The application displays the difference between starting price and ending price of the current time selection.
+5. The application shows the country's currency flag.
+6. The application displays the difference between starting price and ending price of the current time selection.
+7. The application caches the data in localStorage to avoid fetching the same data multiple times.
 
 ## Customize configuration
 

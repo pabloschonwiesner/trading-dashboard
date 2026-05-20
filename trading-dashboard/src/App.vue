@@ -19,9 +19,7 @@
         @update:modelValue="handleSelectedPairChange"
       />
     </div>
-    <div v-if="data && !loading && !error">
-      <CurrencyPair :pair="selectedPair" />
-    </div>
+    <CurrencyPair :pair="selectedPair" />
   </main>
 </template>
 
