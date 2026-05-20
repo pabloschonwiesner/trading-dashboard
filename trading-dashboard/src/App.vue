@@ -4,16 +4,19 @@
   </header>
 
   <main>
-    <FieldSelect v-model="selectedExchange" :options="exchangeOptions" label="Exchange" />
-    <div v-if="loading">Loading currency pairs...</div>
-    <div v-else-if="error">Error: {{ error.message }}</div>
-    <div v-else-if="data">
+    <div class="selects-container">
+      <FieldSelect v-model="selectedExchange" :options="exchangeOptions" label="Exchange" />
+      <div v-if="loading">Loading currency pairs...</div>
+      <div v-else-if="error">Error: {{ error.message }}</div>
       <FieldSelect 
+        v-else-if="data"
         label="Primary Symbol" 
         v-model="selectedPair" 
         :options="currencyPairOptions" 
         @update:modelValue="handleSelectedPairChange"
       />
+    </div>
+    <div v-if="data && !loading && !error">
       <CurrencyPair :pair="selectedPair" />
     </div>
   </main>
@@ -60,6 +63,19 @@ header {
   font-weight: 700;
   text-align: center;
   margin-bottom: 1.5rem;
+}
+
+.selects-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+@media (min-width: 768px) {
+  .selects-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
 }
 
 @media (min-width: 1024px) {

@@ -32,6 +32,9 @@ const emit = defineEmits(['update:modelValue'])
 .currency-tabbing {
   border-top: 1px solid #dedede;
   padding: 1rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
 button {
@@ -42,7 +45,6 @@ button {
   border-radius: 4px;
   background-color: #fff;
   cursor: pointer;
-  margin-right: 0.75rem;
 }
 
 button:hover, button.active {

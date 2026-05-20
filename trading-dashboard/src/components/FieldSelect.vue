@@ -47,6 +47,12 @@ const model = computed({
   margin-bottom: 1rem;
 }
 
+@media (min-width: 768px) {
+  .field-select {
+    margin-bottom: 0;
+  }
+}
+
 .field-label {
   display: block;
   margin-bottom: 4px;

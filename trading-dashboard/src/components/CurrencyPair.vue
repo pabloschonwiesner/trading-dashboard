@@ -31,7 +31,19 @@ const showCurrencyPair = computed(() => props.pair && props.pair.symbol);
   background-color: #F8F9FA;
   border-radius: 8px;
   width: 100%;
-  height: 570px;
+  min-height: 400px;
   margin-top: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .currency-pair {
+    min-height: 500px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .currency-pair {
+    min-height: 570px;
+  }
 }
 </style>

@@ -44,6 +44,8 @@ const percentage = computed(() => {
   align-items: center;
   justify-content: space-between;
   padding: 1rem 0;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .current-price {
@@ -66,7 +68,7 @@ const percentage = computed(() => {
 
 .value {
   font-weight: 700;
-  font-size: 1.25rem;
+  font-size: 1rem;
   color: #333;
   text-transform: uppercase;
   line-height: 1.1;
@@ -96,5 +98,11 @@ const percentage = computed(() => {
 
 .arrow {
   font-size: 0.8rem;
+}
+
+@media (min-width: 1024px) {
+.value {
+    font-size: 1.25rem;
+  }
 }
 </style>
