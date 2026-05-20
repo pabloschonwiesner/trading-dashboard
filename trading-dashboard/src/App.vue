@@ -10,7 +10,7 @@
     <div class="selects-container">
       <FieldSelect v-model="selectedExchange" :options="exchangeOptions" label="Exchange" />
       <div v-if="loading" role="status" aria-live="polite">Loading currency pairs...</div>
-      <div v-else-if="error" role="alert" aria-live="assertive">Error: {{ error.message }}</div>
+      <ErrorDisplay v-else-if="error" :error="error" @retry="loadCurrencyPairs" />
       <FieldSelect 
         v-else-if="data"
         label="Primary Symbol" 
@@ -31,6 +31,7 @@ import { useAsyncRequest } from '@/composables/useAsyncRequest';
 import { getCurrencyPairs } from '@/services/forexService';
 import CurrencyPair from '@/components/CurrencyPair.vue';
 import FieldSelect from '@/components/FieldSelect.vue';
+import ErrorDisplay from '@/components/ErrorDisplay.vue';
 import { createLocalStorageCache } from '@/cache/localStorageCache'
 
 const { execute: loadCurrencyPairs, loading, error, data } = useAsyncRequest(getCurrencyPairs);
@@ -46,6 +47,10 @@ const currencyPairOptions = computed(() => data.value?.map(pair => ({ value: pai
 function handleSelectedPairChange(pair) {
   selectedPair.value = pair;
   cache.set('selected-pair', pair);
+}
+
+async function handleRetry() {
+  await loadCurrencyPairs();
 }
 
 onMounted(async () => {

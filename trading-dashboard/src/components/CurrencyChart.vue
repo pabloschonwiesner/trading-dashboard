@@ -6,7 +6,9 @@
       :timeframes="timeframes"
       @update:modelValue="handleUpdateTimeFrame" 
     />
-    <CurrencyPlot :data="chartData"/>
+    <ErrorDisplay v-if="error" :error="error" @retry="requestHistoricalData" />
+    <ErrorDisplay v-else-if="errorPreviousClose" :error="errorPreviousClose" @retry="loadPriceData" />
+    <CurrencyPlot v-else :data="chartData"/>
   </div>
 </template>
 
@@ -18,6 +20,7 @@ import { createLocalStorageCache } from '@/cache/localStorageCache'
 import CurrencyPrice from './CurrencyPrice.vue'
 import CurrencyTabbing from './CurrencyTabbing.vue'
 import CurrencyPlot from './CurrencyPlot.vue'
+import ErrorDisplay from './ErrorDisplay.vue'
 
 const { execute: loadHistoricalRates, loading, error, data } = useAsyncRequest(getHistoricalRates);
 const { execute: loadPreviousClose, loading: loadingPreviousClose, error: errorPreviousClose, data: previousCloseData } = useAsyncRequest(getPreviousClose);
@@ -76,15 +79,19 @@ async function requestHistoricalData() {
   difference.value = lastRecord.close - lastRecord.open
 }
 
-watch(() => props.pair, async () => {
-  await requestHistoricalData()
-
+async function loadPriceData() {
   const previousClose = await loadPreviousClose(props.pair.symbol)
   
-  const previousCloseData = previousClose.sort((a, b) => b.timestamp - a.timestamp).reverse()[0]
-  currentPrice.value = (previousCloseData && previousCloseData.close) || 0
-}, { immediate: true })
+  if (previousClose && previousClose.length > 0) {
+    const previousCloseData = previousClose.sort((a, b) => b.timestamp - a.timestamp).reverse()[0]
+    currentPrice.value = (previousCloseData && previousCloseData.close) || 0
+  }
+}
 
+watch(() => props.pair, async () => {
+  await requestHistoricalData()
+  await loadPriceData()
+}, { immediate: true })
 
 onMounted(() => {
   const cachedTimeframe = cache.get('selected-timeframe')
