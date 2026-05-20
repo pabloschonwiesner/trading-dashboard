@@ -35,7 +35,7 @@ const model = computed({
         emit('update:modelValue', value);
     },
     get() {
-        return props.modelValue.value;
+        return props.modelValue;
     }
 })
 </script>

@@ -115,6 +115,8 @@ describe('forexService', () => {
       const mockData = [
         { timestamp: 1609459200000, open: 1.22, high: 1.23, low: 1.21, close: 1.225 }
       ];
+      
+      mockCache.get.mockReturnValue(null);
 
       mockAdapter.getHistoricalRates.mockResolvedValue(mockData);
 
@@ -139,32 +141,55 @@ describe('forexService', () => {
   });
 
   describe('getPreviousClose', () => {
-    it('should delegate to provider without caching', async () => {
+    it('should return cached data when available', async () => {
       //ARRANGE
-      const ticker = { providerSymbol: 'C:EURUSD' };
+      const ticker = 'EURUSD';
+      const cachedData = [
+        { timestamp: 1609459200000, open: 1.22, high: 1.23, low: 1.21, close: 1.225 }
+      ];
+      mockCache.get.mockReturnValue(cachedData);
+
+      //ACT
+      const result = await getPreviousClose(ticker);
+
+      //ASSERT
+      expect(mockCache.get).toHaveBeenCalledWith('previous-close-EURUSD');
+      expect(result).toEqual(cachedData);
+      expect(mockAdapter.getPreviousClose).not.toHaveBeenCalled();
+    });
+
+    it('should fetch from provider and cache when cache is empty', async () => {
+      //ARRANGE
+      const ticker = 'EURUSD';
       const mockData = [
         { timestamp: 1609459200000, open: 1.22, high: 1.23, low: 1.21, close: 1.225 }
       ];
-
+      
+      mockCache.get.mockReturnValue(null);
       mockAdapter.getPreviousClose.mockResolvedValue(mockData);
 
       //ACT
       const result = await getPreviousClose(ticker);
 
       //ASSERT
+      expect(mockCache.get).toHaveBeenCalledWith('previous-close-EURUSD');
       expect(mockAdapter.getPreviousClose).toHaveBeenCalledWith(ticker);
+      expect(mockCache.set).toHaveBeenCalledWith(
+        'previous-close-EURUSD',
+        mockData,
+        expect.any(Number)
+      );
       expect(result).toEqual(mockData);
-      expect(mockCache.get).not.toHaveBeenCalled();
-      expect(mockCache.set).not.toHaveBeenCalled();
     });
 
     it('should propagate errors from provider', async () => {
       //ARRANGE
       const error = new Error('Previous close error');
+      mockCache.get.mockReturnValue(null);
       mockAdapter.getPreviousClose.mockRejectedValue(error);
 
       //ACT & ASSERT
-      await expect(getPreviousClose({})).rejects.toThrow('Previous close error');
+      await expect(getPreviousClose('EURUSD')).rejects.toThrow('Previous close error');
     });
   });
 });

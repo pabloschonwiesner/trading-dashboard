@@ -186,7 +186,7 @@ describe('massiveForexAdapter', () => {
       mockHttpClient.get.mockResolvedValue(mockResponse);
 
       const params = {
-        providerSymbol: 'C:EURUSD',
+        providerSymbol: 'EURUSD',
         from: '2021-01-01',
         to: '2021-01-02',
         multiplier: 1,
@@ -249,7 +249,7 @@ describe('massiveForexAdapter', () => {
       mockHttpClient.get.mockResolvedValue(mockResponse);
 
       //ACT
-      const result = await adapter.getPreviousClose({ providerSymbol: 'C:EURUSD' });
+      const result = await adapter.getPreviousClose('EURUSD');
 
       //ASSERT
       expect(mockHttpClient.get).toHaveBeenCalledWith(

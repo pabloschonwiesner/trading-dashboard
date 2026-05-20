@@ -12,7 +12,7 @@
         label="Primary Symbol" 
         v-model="selectedPair" 
         :options="currencyPairOptions" 
-        @update:modelValue="selectedPair = $event"
+        @update:modelValue="handleSelectedPairChange"
       />
       <CurrencyPair :pair="selectedPair" />
     </div>
@@ -25,17 +25,30 @@ import { useAsyncRequest } from '@/composables/useAsyncRequest';
 import { getCurrencyPairs } from '@/services/forexService';
 import CurrencyPair from '@/components/CurrencyPair.vue';
 import FieldSelect from '@/components/FieldSelect.vue';
+import { createLocalStorageCache } from '@/cache/localStorageCache'
 
 const { execute: loadCurrencyPairs, loading, error, data } = useAsyncRequest(getCurrencyPairs);
 const exchangeOptions = [ { value: 'fx', label: 'Forex (FX)' } ];
 
+const cache = createLocalStorageCache({ prefix: 'forex' })
+
 const selectedPair = ref({});
-const selectedExchange = ref(exchangeOptions[0]);
+const selectedExchange = ref(exchangeOptions[0].value);
 
 const currencyPairOptions = computed(() => data.value?.map(pair => ({ value: pair, label: `${pair.symbol} - ${pair.name}` })) || []);
 
+function handleSelectedPairChange(pair) {
+  selectedPair.value = pair;
+  cache.set('selected-pair', pair);
+}
+
 onMounted(async () => {
   await loadCurrencyPairs();
+  
+  const cachedPair = cache.get('selected-pair');
+  if (cachedPair && data.value) {
+    selectedPair.value = cachedPair;
+  }
 });
 </script>
 

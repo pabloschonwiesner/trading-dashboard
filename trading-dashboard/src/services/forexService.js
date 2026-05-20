@@ -41,5 +41,12 @@ export async function getHistoricalRates(params) {
  * @property {number} rate
  */
 export async function getPreviousClose(ticker) {
+  const cacheKey = 'previous-close-' + ticker
+  const cached = cache.get(cacheKey)
+  if (cached) {
+    return cached
+  }
+  const response = await provider.getPreviousClose(ticker)
+  cache.set(cacheKey, response, new Date().setHours(23, 59, 59, 999))
   return provider.getPreviousClose(ticker)
 }

@@ -7,6 +7,7 @@
 </template>
 
 <script setup>
+import { computed, ref } from 'vue';
 import { Line } from 'vue-chartjs';
 import {
   Chart as ChartJS,
@@ -38,23 +39,6 @@ const getPrimaryColor = () => {
 };
 
 const primaryColor = getPrimaryColor();
-
-const chartData = {
-  labels: ['Oct 2', 'Oct 6', 'Oct 10', 'Oct 14', 'Oct 18', 'Oct 22', 'Oct 26', 'Oct 30'],
-  datasets: [
-    {
-      data: [0.232, 0.231, 0.229, 0.235, 0.236, 0.230, 0.234, 0.235],
-      borderColor: primaryColor,
-      backgroundColor: `${primaryColor}20`,
-      fill: true,
-      borderWidth: 2,
-      tension: 0.1,
-      pointRadius: 0,
-      pointHoverRadius: 4,
-      stepped: false
-    }
-  ]
-};
 
 const chartOptions = {
   responsive: true,
@@ -103,6 +87,33 @@ const chartOptions = {
     intersect: false
   }
 };
+
+const props = defineProps({
+  data: {
+    type: Array,
+    required: true,
+    default: () => []
+  }
+});
+
+const chartData = computed(() => {
+  return {
+    labels: props.data.map( i => new Date(i.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })),
+    datasets: [
+      {
+        data: props.data.map( i => i.close),
+        borderColor: primaryColor,
+        backgroundColor: `${primaryColor}20`,
+        fill: true,
+        borderWidth: 2,
+        tension: 0.1,
+        pointRadius: 0,
+        pointHoverRadius: 4,
+        stepped: false
+      }
+    ]
+  };
+});
 </script>
 
 <style scoped>

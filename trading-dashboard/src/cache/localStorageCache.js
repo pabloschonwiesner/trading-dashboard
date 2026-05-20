@@ -7,7 +7,7 @@ export function createLocalStorageCache({ prefix = 'fx-cache' } = {}) {
 
       const item = JSON.parse(raw)
 
-      if (Date.now() > item.expiresAt) {
+      if (item.expiresAt && (Date.now() > item.expiresAt)) {
         localStorage.removeItem(`${prefix}:${key}`)
         return null
       }
@@ -18,7 +18,7 @@ export function createLocalStorageCache({ prefix = 'fx-cache' } = {}) {
     set(key, value, ttlMs) {
       const item = {
         value,
-        expiresAt: Date.now() + ttlMs,
+        expiresAt: ttlMs ? Date.now() + ttlMs : null,
       }
 
       localStorage.setItem(`${prefix}:${key}`, JSON.stringify(item))

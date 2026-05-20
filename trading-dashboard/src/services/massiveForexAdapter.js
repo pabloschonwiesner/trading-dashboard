@@ -37,7 +37,7 @@ export function createMassiveForexAdapter(httpClient) {
 
     async getHistoricalRates({ providerSymbol, from, to, multiplier = 1, timespan = 'day' }) {
       const response = await httpClient.get(
-        `${massiveBaseUrl}/v2/aggs/ticker/${providerSymbol}/range/${multiplier}/${timespan}/${from}/${to}`,
+        `${massiveBaseUrl}/v2/aggs/ticker/C:${providerSymbol}/range/${multiplier}/${timespan}/${from}/${to}`,
         { headers: massiveHeader }
       )
 
@@ -50,9 +50,9 @@ export function createMassiveForexAdapter(httpClient) {
       }))
     },
 
-    async getPreviousClose({ providerSymbol }) {
+    async getPreviousClose( providerSymbol ) {
       const response = await httpClient.get(
-        `${massiveBaseUrl}/v2/aggs/ticker/${providerSymbol}/prev`,
+        `${massiveBaseUrl}/v2/aggs/ticker/C:${providerSymbol}/prev`,
         { headers: massiveHeader }
       )
 

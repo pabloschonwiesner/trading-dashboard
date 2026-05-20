@@ -2,7 +2,7 @@
   <div class="currency-pair">
     <template v-if="showCurrencyPair">
       <CurrencyFlags :baseCurrency="pair.baseCurrency" :quoteCurrency="pair.quoteCurrency" />
-      <CurrencyChart />
+      <CurrencyChart :pair="pair"/>
     </template>
     <EmptyState v-else />
   </div>
