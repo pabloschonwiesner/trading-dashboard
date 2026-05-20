@@ -1,7 +1,11 @@
 <template>
     <div class="field-select">
-        <label class="field-label">{{ label }}</label>
-        <select v-model="model">
+        <label class="field-label" :for="inputId">{{ label }}</label>
+        <select 
+            v-model="model" 
+            :id="inputId"
+            :aria-label="label"
+        >
             <option value="">Select an option</option>
             <option v-for="option in options" :key="option.value" :value="option.value">
             {{ option.label }}
@@ -11,7 +15,10 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
+
+let uniqueId = 0;
+const generateId = () => `field-select-${++uniqueId}`;
 
 const props = defineProps({
   label: {
@@ -29,6 +36,8 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['update:modelValue']);
+
+const inputId = ref(generateId());
 
 const model = computed({
     set(value) {
@@ -66,9 +75,13 @@ select {
     border-color: #ccc;
 }
 
-select:focus-visible {
-    outline: none;
-    border-color: var(--color-primary);
+select:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
 }
 
+select:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
 </style>

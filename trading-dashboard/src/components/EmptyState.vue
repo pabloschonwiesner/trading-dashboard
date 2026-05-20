@@ -1,7 +1,7 @@
 <template>
-  <div class="empty-state">
+  <div class="empty-state" role="status" aria-live="polite">
     <h2>No currency pair selected</h2>
-    <p>Please select a currency pair from the dropdown</p>
+    <p>Please select a currency pair from the dropdown above to view exchange rate data</p>
   </div>
 </template>
 

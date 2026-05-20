@@ -1,17 +1,25 @@
 <template>
-  <div class="currency-price">
+  <div class="currency-price" role="region" aria-label="Currency price information">
     <div class="current-price">
       <div class="column">
-        <div class="label">EXCHANGE</div>
-        <div class="value">FX</div>
+        <div class="label" id="exchange-label">EXCHANGE</div>
+        <div class="value" aria-labelledby="exchange-label">FX</div>
       </div>
       <div class="column">
-        <div class="label">CURRENT PRICE</div>
-        <div class="value">{{ currentPrice }}</div>
+        <div class="label" id="price-label">CURRENT PRICE</div>
+        <div class="value" aria-labelledby="price-label" aria-live="polite">{{ currentPrice }}</div>
       </div>
     </div>
-    <div class="timeframe-difference" :class="{ 'timeframe-difference-up': difference > 0, 'timeframe-difference-down': difference < 0 }">
-      <span class="arrow">{{ difference == 0 ? '=' : difference > 0 ? '▲' : '▼' }}</span> {{ difference.toFixed(6) }} ({{ percentage }}%)
+    <div 
+      class="timeframe-difference" 
+      :class="{ 'timeframe-difference-up': difference > 0, 'timeframe-difference-down': difference < 0 }"
+      role="status"
+      aria-live="polite"
+      :aria-label="priceChangeLabel"
+    >
+      <span class="arrow" aria-hidden="true">{{ difference == 0 ? '=' : difference > 0 ? '▲' : '▼' }}</span>
+      <span class="sr-only">{{ difference > 0 ? 'Increased' : difference < 0 ? 'Decreased' : 'No change' }}</span>
+      {{ difference.toFixed(6) }} ({{ percentage }}%)
     </div>
   </div>
 </template>
@@ -35,6 +43,11 @@ const props = defineProps({
 const percentage = computed(() => {
   if(props.currentPrice === 0) return '0.00';
   return (props.difference / props.currentPrice * 100).toFixed(2)
+})
+
+const priceChangeLabel = computed(() => {
+  const direction = props.difference > 0 ? 'increased' : props.difference < 0 ? 'decreased' : 'unchanged';
+  return `Price ${direction} by ${Math.abs(props.difference).toFixed(6)} (${percentage.value}%)`;
 })
 </script>
 
@@ -98,6 +111,18 @@ const percentage = computed(() => {
 
 .arrow {
   font-size: 0.8rem;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
 @media (min-width: 1024px) {

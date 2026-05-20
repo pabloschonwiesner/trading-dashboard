@@ -1,13 +1,16 @@
 <template>
   <header>
-    🌐 FX Trading Dashboard
+    <h1>
+      <span aria-hidden="true">🌐</span>
+      <span>FX Trading Dashboard</span>
+    </h1>
   </header>
 
-  <main>
+  <main id="main-content" role="main">
     <div class="selects-container">
       <FieldSelect v-model="selectedExchange" :options="exchangeOptions" label="Exchange" />
-      <div v-if="loading">Loading currency pairs...</div>
-      <div v-else-if="error">Error: {{ error.message }}</div>
+      <div v-if="loading" role="status" aria-live="polite">Loading currency pairs...</div>
+      <div v-else-if="error" role="alert" aria-live="assertive">Error: {{ error.message }}</div>
       <FieldSelect 
         v-else-if="data"
         label="Primary Symbol" 
@@ -57,12 +60,12 @@ onMounted(async () => {
 
 
 <style scoped>
-header {
+header h1 {
   line-height: 1.5;
   font-size: 1.25rem;
   font-weight: 700;
   text-align: center;
-  margin-bottom: 1.5rem;
+  margin: 0 0 1.5rem 0;
 }
 
 .selects-container {

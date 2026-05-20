@@ -1,10 +1,15 @@
 <template>
-  <div class="currency-tabbing">
+  <div class="currency-tabbing" role="tablist" aria-label="Select timeframe for chart data">
     <button 
-      v-for="timeframe in timeframes" 
-      :key="timeframe.label" 
+      v-for="(timeframe, index) in timeframes" 
+      :key="timeframe.label"
+      role="tab"
+      :aria-selected="modelValue.label === timeframe.label"
+      :aria-label="`Show ${timeframe.label} timeframe data`"
+      :tabindex="modelValue.label === timeframe.label ? 0 : -1"
       :class="{ active: modelValue.label === timeframe.label }" 
       @click="emit('update:modelValue', timeframe)"
+      @keydown="handleKeydown($event, index)"
     >
       {{ timeframe.label }}
     </button>
@@ -25,6 +30,33 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['update:modelValue'])
+
+const handleKeydown = (event, currentIndex) => {
+  let newIndex = currentIndex;
+  
+  switch(event.key) {
+    case 'ArrowLeft':
+      event.preventDefault();
+      newIndex = currentIndex > 0 ? currentIndex - 1 : props.timeframes.length - 1;
+      break;
+    case 'ArrowRight':
+      event.preventDefault();
+      newIndex = currentIndex < props.timeframes.length - 1 ? currentIndex + 1 : 0;
+      break;
+    case 'Home':
+      event.preventDefault();
+      newIndex = 0;
+      break;
+    case 'End':
+      event.preventDefault();
+      newIndex = props.timeframes.length - 1;
+      break;
+    default:
+      return;
+  }
+  
+  emit('update:modelValue', props.timeframes[newIndex]);
+}
 </script>
 
 <style scoped>
@@ -50,5 +82,15 @@ button {
 button:hover, button.active {
   background-color: var(--color-primary);
   color: white;
+}
+
+button:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 </style>

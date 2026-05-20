@@ -4,7 +4,7 @@
     <img 
       v-else-if="flagUrl"
       :src="flagUrl" 
-      :alt="`${currencyCode} symbol`"
+      :alt="`Flag representing ${currencyCode?.toUpperCase()} currency`"
       class="flag-image"
       loading="lazy"
       crossorigin="anonymous"
