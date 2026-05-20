@@ -10,7 +10,6 @@ export function getErrorMessage(error) {
     }
   }
 
-  // Rate Limit Error (429)
   if (error instanceof RateLimitError) {
     const retryMessage = error.retryAfter 
       ? `Please wait ${error.retryAfter} seconds before trying again.`
@@ -25,7 +24,6 @@ export function getErrorMessage(error) {
     }
   }
 
-  // Network Error
   if (error instanceof NetworkError) {
     return {
       title: 'Connection Error',
@@ -35,7 +33,6 @@ export function getErrorMessage(error) {
     }
   }
 
-  // Not Found Error (404)
   if (error instanceof NotFoundError) {
     return {
       title: 'Data Not Found',
@@ -45,7 +42,6 @@ export function getErrorMessage(error) {
     }
   }
 
-  // Server Error (5xx)
   if (error instanceof ServerError) {
     return {
       title: 'Server Error',
@@ -54,8 +50,7 @@ export function getErrorMessage(error) {
       canRetry: true
     }
   }
-
-  // Generic API Error
+  
   if (error instanceof ApiError) {
     return {
       title: 'API Error',
@@ -65,7 +60,6 @@ export function getErrorMessage(error) {
     }
   }
 
-  // Generic JavaScript Error
   if (error instanceof Error) {
     return {
       title: 'Error',
@@ -75,7 +69,6 @@ export function getErrorMessage(error) {
     }
   }
 
-  // Unknown error type
   return {
     title: 'Unknown Error',
     message: String(error) || 'An unexpected error occurred. Please try again.',

@@ -1,7 +1,6 @@
 <template>
   <div 
     class="error-display" 
-    :class="`error-display--${errorInfo.type}`"
     role="alert"
     aria-live="assertive"
   >
@@ -49,28 +48,8 @@ const errorInfo = computed(() => getErrorMessage(props.error))
 .error-display {
   display: flex;
   gap: 1rem;
-  padding: 1rem;
-  border-radius: 8px;
-  border: 1px solid;
   margin: 1rem 0;
-}
-
-.error-display--error {
-  background-color: #FEF2F2;
-  border-color: #FCA5A5;
-  color: #991B1B;
-}
-
-.error-display--warning {
-  background-color: #FFFBEB;
-  border-color: #FCD34D;
-  color: #92400E;
-}
-
-.error-display--info {
-  background-color: #EFF6FF;
-  border-color: #93C5FD;
-  color: #1E40AF;
+  color: #ccc;
 }
 
 .error-display__icon {

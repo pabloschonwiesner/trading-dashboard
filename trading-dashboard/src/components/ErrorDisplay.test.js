@@ -11,7 +11,6 @@ describe('ErrorDisplay', () => {
     })
 
     expect(wrapper.find('.error-display').exists()).toBe(true)
-    expect(wrapper.find('.error-display--warning').exists()).toBe(true)
     expect(wrapper.find('.error-display__title').text()).toBe('Too Many Requests')
     expect(wrapper.find('.error-display__message').text()).toContain('API rate limit')
     expect(wrapper.find('.error-display__message').text()).toContain('5 requests per minute')
@@ -25,7 +24,6 @@ describe('ErrorDisplay', () => {
     })
 
     expect(wrapper.find('.error-display').exists()).toBe(true)
-    expect(wrapper.find('.error-display--error').exists()).toBe(true)
     expect(wrapper.find('.error-display__title').text()).toBe('Connection Error')
     expect(wrapper.find('.error-display__message').text()).toBe('Network error occurred')
     expect(wrapper.find('.error-display__retry').exists()).toBe(true)
@@ -38,7 +36,6 @@ describe('ErrorDisplay', () => {
     })
 
     expect(wrapper.find('.error-display').exists()).toBe(true)
-    expect(wrapper.find('.error-display--warning').exists()).toBe(true)
     expect(wrapper.find('.error-display__title').text()).toBe('Data Not Found')
     expect(wrapper.find('.error-display__message').text()).toContain('currency data could not be found')
     expect(wrapper.find('.error-display__retry').exists()).toBe(false)
@@ -51,7 +48,6 @@ describe('ErrorDisplay', () => {
     })
 
     expect(wrapper.find('.error-display').exists()).toBe(true)
-    expect(wrapper.find('.error-display--error').exists()).toBe(true)
     expect(wrapper.find('.error-display__title').text()).toBe('Server Error')
     expect(wrapper.find('.error-display__message').text()).toContain('server is experiencing issues')
     expect(wrapper.find('.error-display__retry').exists()).toBe(true)
@@ -64,7 +60,6 @@ describe('ErrorDisplay', () => {
     })
 
     expect(wrapper.find('.error-display').exists()).toBe(true)
-    expect(wrapper.find('.error-display--error').exists()).toBe(true)
     expect(wrapper.find('.error-display__title').text()).toBe('API Error')
     expect(wrapper.find('.error-display__message').text()).toBe('Custom error message')
     expect(wrapper.find('.error-display__retry').exists()).toBe(true)
@@ -77,7 +72,6 @@ describe('ErrorDisplay', () => {
     })
 
     expect(wrapper.find('.error-display').exists()).toBe(true)
-    expect(wrapper.find('.error-display--error').exists()).toBe(true)
     expect(wrapper.find('.error-display__title').text()).toBe('Error')
     expect(wrapper.find('.error-display__message').text()).toBe('Something went wrong')
     expect(wrapper.find('.error-display__retry').exists()).toBe(true)
@@ -156,7 +150,6 @@ describe('ErrorDisplay', () => {
       props: { error }
     })
 
-    expect(wrapper.find('.error-display--warning').exists()).toBe(true)
     expect(wrapper.find('.error-display__icon').text()).toBe('⚡')
   })
 
@@ -166,7 +159,6 @@ describe('ErrorDisplay', () => {
       props: { error }
     })
 
-    expect(wrapper.find('.error-display--error').exists()).toBe(true)
     expect(wrapper.find('.error-display__icon').text()).toBe('⚠️')
   })
 })

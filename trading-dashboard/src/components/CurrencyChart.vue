@@ -1,19 +1,20 @@
 <template>
   <div>
-    <CurrencyPrice :currentPrice="currentPrice" :difference="difference" />
-    <CurrencyTabbing 
-      v-model="selectedTimeframe" 
-      :timeframes="timeframes"
-      @update:modelValue="handleUpdateTimeFrame" 
-    />
-    <ErrorDisplay v-if="error" :error="error" @retry="requestHistoricalData" />
-    <ErrorDisplay v-else-if="errorPreviousClose" :error="errorPreviousClose" @retry="loadPriceData" />
-    <CurrencyPlot v-else :data="chartData"/>
+    <ErrorDisplay v-if="error" :error="error" @retry="initializeData" style="margin-top: 4rem;" />
+    <template v-else>
+      <CurrencyPrice :currentPrice="currentPrice" :difference="difference" />
+      <CurrencyTabbing 
+        v-model="selectedTimeframe" 
+        :timeframes="timeframes"
+        @update:modelValue="handleUpdateTimeFrame" 
+      />
+      <CurrencyPlot :data="chartData"/>
+    </template>
   </div>
 </template>
 
 <script setup>
-import { computed, ref, watch, onMounted } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import { useAsyncRequest } from '@/composables/useAsyncRequest';
 import { getHistoricalRates, getPreviousClose } from '@/services/forexService';
 import { createLocalStorageCache } from '@/cache/localStorageCache'
@@ -88,10 +89,12 @@ async function loadPriceData() {
   }
 }
 
-watch(() => props.pair, async () => {
+async function initializeData() {
   await requestHistoricalData()
   await loadPriceData()
-}, { immediate: true })
+}
+
+watch(() => props.pair, initializeData, { immediate: true })
 
 onMounted(() => {
   const cachedTimeframe = cache.get('selected-timeframe')
