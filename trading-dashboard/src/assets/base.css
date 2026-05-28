@@ -10,10 +10,10 @@
 
   --vt-c-indigo: #667EEA;
 
-  --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
-  --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
-  --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
-  --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);
+  --vt-c-divider-light-1: #999999;
+  --vt-c-divider-light-2: #cccccc;
+  --vt-c-divider-dark-1: #666666;
+  --vt-c-divider-dark-2: #444444;
 
   --vt-c-text-light-1: var(--vt-c-black-soft);
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);

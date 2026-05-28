@@ -76,13 +76,13 @@ const priceChangeLabel = computed(() => {
 .label {
   font-size: 0.65rem;
   font-weight: 600;
-  color: #888;
+  color: var(--color-text);
 }
 
 .value {
   font-weight: 700;
   font-size: 1rem;
-  color: #333;
+  color: var(--color-text);
   text-transform: uppercase;
   line-height: 1.1;
 }

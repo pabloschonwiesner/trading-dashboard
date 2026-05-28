@@ -62,7 +62,7 @@ const handleKeydown = (event, currentIndex) => {
 <style scoped>
 
 .currency-tabbing {
-  border-top: 1px solid #dedede;
+  border-top: 1px solid var(--color-border);
   padding: 1rem 0;
   display: flex;
   flex-wrap: wrap;
@@ -73,9 +73,9 @@ button {
   padding: 0.5rem 1rem;
   color: var(--color-text);
   font-weight: 700;
-  border: none;
+  border: 1px solid var(--color-border);
   border-radius: 4px;
-  background-color: #fff;
+  background-color: var(--color-background);;
   cursor: pointer;
 }
 

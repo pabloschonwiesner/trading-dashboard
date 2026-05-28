@@ -16,23 +16,23 @@
       @supports (font-variation-settings: normal) {
         * { font-feature-settings: 'kern' 1; }
       }
-      .skip-link {
-        position: absolute;
-        top: -40px;
-        left: 0;
-        background: #667EEA;
-        color: white;
-        padding: 8px;
-        text-decoration: none;
-        z-index: 100;
+
+      body {
+        margin: 0;
+        background-color: #ffffff;
+        color: #222222;
+        transition: background-color 0.5s, color 0.5s;
       }
-      .skip-link:focus {
-        top: 0;
+      
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #181818;
+          color: rgba(235, 235, 235, 0.64);
+        }
       }
     </style>
   </head>
   <body>
-    <a href="#main-content" class="skip-link">Skip to main content</a>
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
   </body>

@@ -67,21 +67,45 @@ const model = computed({
   margin-bottom: 4px;
   font-size: 0.8rem;
   font-weight: 500;
+  color: var(--color-text);
 }
 
 select {
-    padding: 0.45rem;
-    border-radius: 0.33rem;
-    border-color: #ccc;
+  padding: 0.45rem;
+  border-radius: 0.33rem;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-background);
+  color: var(--color-text);
+  cursor: pointer;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-hover) var(--color-background-mute);
 }
 
 select:focus {
-    outline: 2px solid var(--color-primary);
-    outline-offset: 2px;
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-color: var(--color-primary);
 }
 
 select:focus-visible {
-    outline: 2px solid var(--color-primary);
-    outline-offset: 2px;
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+select::-webkit-scrollbar {
+  width: 12px;
+}
+ 
+select::-webkit-scrollbar-track {
+  background: var(--color-background-mute);
+}
+ 
+select::-webkit-scrollbar-thumb {
+  background: var(--color-border-hover);
+  border-radius: 6px;
+}
+ 
+select::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text);
 }
 </style>

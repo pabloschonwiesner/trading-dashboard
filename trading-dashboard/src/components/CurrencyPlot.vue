@@ -130,10 +130,12 @@ const chartDescription = computed(() => {
 
 <style scoped>
 .currency-plot {
-  background-color: #FFF;
+  background-color: var(--color-background);;
   display: flex;
   flex-direction: column;
   height: 350px;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
 }
 
 .chart {

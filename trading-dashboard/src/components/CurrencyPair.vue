@@ -27,8 +27,8 @@ const showCurrencyPair = computed(() => props.pair && props.pair.symbol);
 
 <style scoped>
 .currency-pair {
-  padding: 1.25rem;
-  background-color: #F8F9FA;
+  padding: 1.25rem 0;
+  background-color: var(--color-background);
   border-radius: 8px;
   width: 100%;
   min-height: 400px;
