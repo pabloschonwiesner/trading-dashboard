@@ -48,5 +48,5 @@ export async function getPreviousClose(ticker) {
   }
   const response = await provider.getPreviousClose(ticker)
   cache.set(cacheKey, response, new Date().setHours(23, 59, 59, 999))
-  return provider.getPreviousClose(ticker)
+  return response
 }
