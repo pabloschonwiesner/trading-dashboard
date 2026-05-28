@@ -38,7 +38,8 @@ const timeframes = [
   { multiplier: 2, timespan: 'year', label: 'ALL' },
 ]
 
-const selectedTimeframe = ref(timeframes[0]);
+const cachedTimeframe = cache.get('selected-timeframe')
+const selectedTimeframe = ref(cachedTimeframe || timeframes[0]);
 const chartData = ref([])
 const currentPrice = ref(0.00)
 const difference = ref(0.00)
@@ -96,12 +97,6 @@ async function initializeData() {
 
 watch(() => props.pair, initializeData, { immediate: true })
 
-onMounted(() => {
-  const cachedTimeframe = cache.get('selected-timeframe')
-  if (cachedTimeframe) {
-    selectedTimeframe.value = cachedTimeframe
-  }
-})
 </script>
 
 <style scoped>
